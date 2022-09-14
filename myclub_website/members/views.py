@@ -25,5 +25,18 @@ def logout_user(request):
 	return redirect('home')
 
 def register_user(request):
-	return render(request, 'authenticate/register_user.html', {})
+	if request.method == "POST":
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(username=username, password=password)
+			login(request, user)
+			messages.success(request, ("Registration Successful!"))
+			return redirect('home')
+	else:
+		form = UserCreationForm()
+	return render(request, 'authenticate/register_user.html', {'form':form
+	})
 	

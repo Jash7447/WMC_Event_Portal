@@ -1,12 +1,16 @@
 {% extends 'events/base.html' %}
 {% block content %}
+{% if form.errors %}
+<p>There was some error with your form...</p>
+{% endif %}
+
     <h1>Register</h1>
     <br/>
         
-        <form action="" method=POST>
+        <form action="{% url 'register-user' %}" method=POST>
             {% csrf_token %}
-
-
+            {{ form.as_p }}
+            <br/><br/>
             <input type="submit" value="Submit" class="btn btn-secondary">
             
         </form>
